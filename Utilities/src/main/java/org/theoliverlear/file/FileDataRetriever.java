@@ -1,23 +1,18 @@
-package org.theoliverlear;
+package org.theoliverlear.file;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
  * This class is used to retrieve data from a file.
  */
 public class FileDataRetriever {
-    int targetLineIndex;
+    ArrayList<String> lines;
     String filePath;
     String data;
-    /**
-     * This constructor takes a target line index and a file path as arguments.
-     * @param targetLineIndex
-     * @param filePath
-     */
-    public FileDataRetriever(int targetLineIndex, String filePath) {
-        this.targetLineIndex = targetLineIndex;
+    public FileDataRetriever(String filePath) {
         this.filePath = filePath;
         this.data = "";
         this.fetchData();
@@ -32,9 +27,8 @@ public class FileDataRetriever {
             Scanner fileReader = new Scanner(new File(this.filePath));
             while (fileReader.hasNext()) {
                 line = fileReader.nextLine();
-                if (lineCounter == this.targetLineIndex) {
-                    this.data = line;
-                }
+                this.data += line + "\n";
+                this.lines.add(line);
                 lineCounter++;
             }
         } catch (FileNotFoundException ex) {
