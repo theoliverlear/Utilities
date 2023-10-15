@@ -7,11 +7,18 @@ public class Editor {
         this.indentLevel = indentLevel;
         this.indentSize = indentSize;
     }
+    //------------------------------Getters-----------------------------------
     public int getIndentLevel() {
         return this.indentLevel;
     }
-    //------------------------------Getters-----------------------------------
     public int getIndentSize() {
         return this.indentSize;
+    }
+    //------------------------------Setters-----------------------------------
+    public void setIndentLevel(int indentLevel) {
+        this.indentLevel = indentLevel;
+    }
+    public void setIndentSize(int indentSize) {
+        this.indentSize = indentSize;
     }
 }
