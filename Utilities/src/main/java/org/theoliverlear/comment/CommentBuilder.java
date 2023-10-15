@@ -16,7 +16,7 @@ public class CommentBuilder {
         System.out.println("""
                 1. //-----Heading-----
                 2. //====-Heading-====
-                3. //<!---Heading---->
+                3. <!-----Heading------>
                 4. #------Heading-----""");
         System.out.println("Enter the heading style: ");
         int headingStyleChoice = scanner.nextInt();
@@ -30,6 +30,14 @@ public class CommentBuilder {
         int indentLevel = scanner.nextInt();
         scanner.nextLine();
         Editor editor = new Editor(indentLevel, indentSize);
+        String headingStyle = switch (headingStyleChoice) {
+            case 1 -> "-";
+            case 2 -> "=";
+            case 3 -> "<!--";
+            case 4 -> "#";
+            default -> "-";
+        };
+        Heading heading = new Heading(headingStyle, headingText, "", editor, false);
     }
 
     public static void main(String[] args) {
