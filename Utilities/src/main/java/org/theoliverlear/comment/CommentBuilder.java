@@ -33,7 +33,7 @@ public class CommentBuilder {
         String headingStyle = switch (headingStyleChoice) {
             case 1 -> "-";
             case 2 -> "=";
-            case 3 -> "<!--";
+            case 3 -> "<!---->";
             case 4 -> "#";
             default -> "-";
         };
