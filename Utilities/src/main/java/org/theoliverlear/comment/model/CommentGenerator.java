@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class CommentGenerator {
     Heading heading;
-    Clipboard clipboard;
+    UserClipboard userClipboard;
     public CommentGenerator() {
         String headingStyle;
         Scanner scanner = new Scanner(System.in);
