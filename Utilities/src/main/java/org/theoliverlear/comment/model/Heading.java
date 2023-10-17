@@ -7,6 +7,15 @@ public class Heading {
     private boolean isIndentCorrected;
     private Editor editor;
     String comment;
+    //----------------------------Constructors--------------------------------
+    public Heading() {
+        this.style = "";
+        this.text = "Header Title";
+        this.artifact = "//";
+        this.editor = new Editor();
+        this.comment = "";
+        this.isIndentCorrected = false;
+    }
     public Heading(String style, String text, String artifact, Editor editor,
                    boolean isIndentCorrected) {
         this.style = style;
@@ -19,8 +28,31 @@ public class Heading {
     //------------------------------Methods-----------------------------------
     public void buildComment() {
         String headingBuilder = this.text;
-
+        headingBuilder = headingBuilder.trim().replace(" ", "-");
+        headingBuilder = "-" + headingBuilder + "-";
+        int headingLength = headingBuilder.length();
+        int lineLength = this.editor.getLineLength();
+        lineLength -= this.artifact.length();
+        int titleAdjust = lineLength - headingLength;
+        int indentAdjust = this.editor.getIndentLevel() * this.editor.getIndentSize();
+        titleAdjust -= indentAdjust;
+        int left;
+        int right;
+        if (this.isIndentCorrected) {
+            left = titleAdjust / 2;
+            right = titleAdjust - left;
+            left -= (indentAdjust / 2);
+            right += (indentAdjust / 2);
+        } else {
+            left = titleAdjust / 2;
+            right = titleAdjust - left;
+        }
+        String leftThinHeading = "-".repeat(left);
+        String rightThinHeading = "-".repeat(right);
+        this.comment = this.artifact + leftThinHeading + headingBuilder
+                                     + rightThinHeading;
     }
+
     //------------------------------Getters-----------------------------------
     public String getStyle() {
         return this.style;
