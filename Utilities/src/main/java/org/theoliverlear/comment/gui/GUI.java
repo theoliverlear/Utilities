@@ -3,6 +3,7 @@ package org.theoliverlear.comment.gui;
 import java.awt.*;
 
 public class GUI {
+    //----------------------------Constructors--------------------------------
     public GUI() {
         Frame frame = new Frame();
         frame.setSize(500, 500);
