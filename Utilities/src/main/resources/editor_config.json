@@ -1,0 +1,13 @@
+{
+  "header": [
+    {
+      "indentCorrection": true
+    }
+  ],
+  "editor": [
+    {
+      "indentationSize": 4,
+      "lineLength": 78
+    }
+  ]
+}
