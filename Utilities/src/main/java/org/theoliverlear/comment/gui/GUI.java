@@ -1,36 +1,43 @@
 package org.theoliverlear.comment.gui;
 
+import org.theoliverlear.comment.model.Editor;
+import org.theoliverlear.comment.model.Heading;
+
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class GUI {
+public class GUI extends Frame {
+    TextField headingText;
+    TextArea commentText;
+
     //----------------------------Constructors--------------------------------
     public GUI() {
-        Frame frame = new Frame();
-        frame.setSize(1000, 1000);
-        frame.setVisible(true);
-        TextArea textArea = new TextArea();
-        textArea.setSize(200, 200);
-        textArea.setVisible(true);
-        frame.add(textArea);
-        // TODO: use check box to select heading style
-        frame.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent windowEvent) {
+        setSize(300, 300);
+        setVisible(true);
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
                 System.exit(0);
             }
         });
-        Canvas canvas = new Canvas();
-        canvas.setSize(200, 200);
-        frame.add(canvas);
-        canvas.setVisible(true);
-        canvas.setBackground(Color.WHITE);
-        Graphics graphics = canvas.getGraphics();
-        graphics.setColor(Color.BLACK);
-        graphics.drawString("Hello", 900, 900);
-        canvas.paint(graphics);
-
-
+        this.commentText = new TextArea();
+        this.commentText.setBounds(100, 300, 100, 100);
+        this.headingText = new TextField();
+        this.headingText.setBounds(100, 100, 100, 100);
+        this.headingText.setSize(100, 100);
+        add(headingText);
+        BorderLayout borderLayout = new BorderLayout();
+        setLayout(borderLayout);
+        this.headingText.setMaximumSize(new Dimension(100, 100));
+        repaint();
+    }
+    public void paint(Graphics g) {
+        g.drawString("Hello World", 100, 100);
+        Editor editor = new Editor(1, 4, 78);
+        Heading heading = new Heading("Thin", headingText.getText(), "//", editor, false);
+        heading.buildComment();
+        g.drawString(heading.getComment(), 100, 300);
+        this.commentText.setText(heading.getComment());
     }
     public static void main(String[] args) {
         GUI gui = new GUI();
