@@ -33,11 +33,11 @@ public class GUI extends Frame {
     }
     public void paint(Graphics g) {
         g.drawString("Hello World", 100, 100);
-        Editor editor = new Editor(1, 4, 78);
-        Heading heading = new Heading("Thin", headingText.getText(), "//", editor, false);
-        heading.buildComment();
-        g.drawString(heading.getComment(), 100, 300);
-        this.commentText.setText(heading.getComment());
+//        Editor editor = new Editor(1, 4, 78);
+//        Heading heading = new Heading("Thin", headingText.getText(), "//", editor, false);
+//        heading.buildThinComment();
+//        g.drawString(heading.getComment(), 100, 300);
+//        this.commentText.setText(heading.getComment());
     }
     public static void main(String[] args) {
         GUI gui = new GUI();
