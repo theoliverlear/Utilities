@@ -33,9 +33,10 @@ public class CommentBuilder {
                             2. //=======-Heading-=======
                             3. <!--------Heading------->
                             4. #---------Heading--------
-                            5. #========-Heading-=======""";
+                            5. #========-Heading-=======
+                            6. /*--------Heading------*/""";
                     commentTypeChoice = Integer.parseInt(getUserInput(commentTypePrompt));
-                    if (commentTypeChoice < 1 || commentTypeChoice > 5) {
+                    if (commentTypeChoice < 1 || commentTypeChoice > 6) {
                         System.out.println("Please enter a valid number.");
                     } else {
                         break;
@@ -50,7 +51,8 @@ public class CommentBuilder {
                 case 2 -> this.heading.setHeadingType(HeadingType.THICK);
                 case 3 -> this.heading.setHeadingType(HeadingType.HTML);
                 case 4 -> this.heading.setHeadingType(HeadingType.THIN_HASH);
-                default -> this.heading.setHeadingType(HeadingType.THIN);
+                case 5 -> this.heading.setHeadingType(HeadingType.THICK_HASH);
+                case 6 -> this.heading.setHeadingType(HeadingType.CSS);
             }
             String headingPrompt = "Please enter the heading title: ";
             this.heading.setText(getUserInput(headingPrompt));
