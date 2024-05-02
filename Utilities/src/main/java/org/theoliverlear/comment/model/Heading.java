@@ -1,38 +1,46 @@
 package org.theoliverlear.comment.model;
 
 public class Heading {
-    private String style; // Ex. - Heading - =-Heading-= <!--Heading-->
+    private HeadingType headingType;
     private String text;
-    private String artifact;
     private boolean isIndentCorrected;
     private Editor editor;
+
     String comment;
     //----------------------------Constructors--------------------------------
     public Heading() {
-        this.style = "";
-        this.text = "Header Title";
-        this.artifact = "//";
-        this.editor = new Editor();
-        this.comment = "";
+        this.headingType = HeadingType.THIN;
+        this.text = "";
         this.isIndentCorrected = false;
+        this.editor = new Editor();
     }
-    public Heading(String style, String text, String artifact, Editor editor,
-                   boolean isIndentCorrected) {
-        this.style = style;
+    public Heading(HeadingType headingType, String text, boolean isIndentCorrected) {
+        this.headingType = headingType;
         this.text = text;
-        this.artifact = artifact;
         this.isIndentCorrected = isIndentCorrected;
+        this.editor = new Editor();
+    }
+    public Heading(String text, Editor editor) {
+        this.headingType = HeadingType.THIN;
+        this.text = text;
+        this.isIndentCorrected = false;
         this.editor = editor;
-        this.comment = "";
+    }
+    public Heading(HeadingType headingType, String text, Editor editor) {
+        this.headingType = headingType;
+        this.text = text;
+        this.isIndentCorrected = false;
+        this.editor = editor;
     }
     //------------------------------Methods-----------------------------------
     public void buildComment() {
-        String headingBuilder = this.text;
-        headingBuilder = headingBuilder.trim().replace(" ", "-");
-        headingBuilder = "-" + headingBuilder + "-";
-        int headingLength = headingBuilder.length();
+        String titleHeader = this.text;
+        titleHeader = normalizeHeadingText(titleHeader);
+        titleHeader = "-" + titleHeader + "-";
+        int headingLength = titleHeader.length();
         int lineLength = this.editor.getLineLength();
-        lineLength -= this.artifact.length();
+        lineLength -= this.headingType.PRE_ARTIFACT.length();
+        lineLength -= this.headingType.POST_ARTIFACT.length();
         int titleAdjust = lineLength - headingLength;
         int indentAdjust = this.editor.getIndentLevel() * this.editor.getIndentSize();
         titleAdjust -= indentAdjust;
@@ -49,19 +57,29 @@ public class Heading {
         }
         String leftThinHeading = "-".repeat(left);
         String rightThinHeading = "-".repeat(right);
-        this.comment = this.artifact + leftThinHeading + headingBuilder
-                                     + rightThinHeading;
+        this.concatCommentParts(leftThinHeading, titleHeader, rightThinHeading);
     }
-
-    //------------------------------Getters-----------------------------------
-    public String getStyle() {
-        return this.style;
+    public void concatCommentParts(String leftThinHeading, String headingBuilder, String rightThinHeading) {
+        this.comment = "%s%s%s%s%s".formatted(this.headingType.PRE_ARTIFACT, leftThinHeading,
+                                              headingBuilder, rightThinHeading,
+                                              this.headingType.POST_ARTIFACT);
+    }
+    public static String normalizeHeadingText(String heading) {
+        String[] words = heading.split(" ");
+        StringBuilder normalizedHeading = new StringBuilder();
+        for (String word : words) {
+            normalizedHeading.append(word.substring(0, 1).toUpperCase());
+            normalizedHeading.append(word.substring(1).toLowerCase());
+            normalizedHeading.append("-");
+        }
+        return normalizedHeading.toString();
+    }
+    //=============================-Getters-==================================
+    public HeadingType getHeadingType() {
+        return this.headingType;
     }
     public String getText() {
         return this.text;
-    }
-    public String getArtifact() {
-        return this.artifact;
     }
     public boolean getIsIndentCorrected() {
         return this.isIndentCorrected;
@@ -72,15 +90,12 @@ public class Heading {
     public String getComment() {
         return this.comment;
     }
-    //------------------------------Setters-----------------------------------
-    public void setStyle(String style) {
-        this.style = style;
+    //=============================-Setters-==================================
+    public void setHeadingType(HeadingType headingType) {
+        this.headingType = headingType;
     }
     public void setText(String text) {
         this.text = text;
-    }
-    public void setArtifact(String artifact) {
-        this.artifact = artifact;
     }
     public void setIsIndentCorrected(boolean isIndentCorrected) {
         this.isIndentCorrected = isIndentCorrected;
