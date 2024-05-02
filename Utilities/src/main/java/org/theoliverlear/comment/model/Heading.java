@@ -1,13 +1,13 @@
 package org.theoliverlear.comment.model;
 
 public class Heading {
+    //============================-Variables--================================
     private HeadingType headingType;
     private String text;
     private boolean isIndentCorrected;
     private Editor editor;
-
-    String comment;
-    //----------------------------Constructors--------------------------------
+    private String comment;
+    //==========================-Constructors--===============================
     public Heading() {
         this.headingType = HeadingType.THIN;
         this.text = "";
@@ -32,7 +32,9 @@ public class Heading {
         this.isIndentCorrected = false;
         this.editor = editor;
     }
-    //------------------------------Methods-----------------------------------
+    //=============================-Methods--=================================
+
+    //---------------------------Build-Comment--------------------------------
     public void buildComment() {
         String titleHeader = this.text;
         titleHeader = normalizeHeadingText(titleHeader);
@@ -55,15 +57,18 @@ public class Heading {
             left = titleAdjust / 2;
             right = titleAdjust - left;
         }
-        String leftThinHeading = "-".repeat(left);
-        String rightThinHeading = "-".repeat(right);
+        String leftThinHeading = this.headingType.SEPARATOR_CHAR.repeat(left);
+        String rightThinHeading = this.headingType.SEPARATOR_CHAR.repeat(right);
         this.concatCommentParts(leftThinHeading, titleHeader, rightThinHeading);
     }
-    public void concatCommentParts(String leftThinHeading, String headingBuilder, String rightThinHeading) {
+    //-----------------------Concat-Comment-Parts-----------------------------
+    public void concatCommentParts(String leftThinHeading, String headingBuilder,
+                                   String rightThinHeading) {
         this.comment = "%s%s%s%s%s".formatted(this.headingType.PRE_ARTIFACT, leftThinHeading,
                                               headingBuilder, rightThinHeading,
                                               this.headingType.POST_ARTIFACT);
     }
+    //----------------------Normalize-Heading-Text----------------------------
     public static String normalizeHeadingText(String heading) {
         String[] words = heading.split(" ");
         StringBuilder normalizedHeading = new StringBuilder();
